@@ -24,6 +24,7 @@
   /* Feedback colors */
   --success: #2e7d32;
   --success-light: #e8f5e9;
+  --success-dark: #1b5e20;
   --warning: #ff9800;
   --warning-light: #fff3cd;
   --error: #c62828;
@@ -351,7 +352,7 @@ section h3 {
 }
 
 .copy-link:hover {
-  background-color: #1b5e20;
+  background-color: var(--success-dark);
   color: white;
 }
 

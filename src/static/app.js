@@ -522,7 +522,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Create social sharing buttons
     const shareUrl = encodeURIComponent(window.location.href);
     const shareTitle = encodeURIComponent(`${name} - Mergington High School`);
-    const shareText = encodeURIComponent(`Check out ${name}: ${details.description}`);
+    const shareText = encodeURIComponent(`Check out ${name}: ${details.description || 'Learn more about this activity'}`);
     
     const socialShareButtons = `
       <div class="social-share">
