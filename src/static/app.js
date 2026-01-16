@@ -637,11 +637,14 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
           await navigator.clipboard.writeText(url);
           // Show success feedback
-          const originalText = copyLinkButton.querySelector(".tooltip-text").textContent;
-          copyLinkButton.querySelector(".tooltip-text").textContent = "Link copied!";
-          setTimeout(() => {
-            copyLinkButton.querySelector(".tooltip-text").textContent = originalText;
-          }, 2000);
+          const tooltipText = copyLinkButton.querySelector(".tooltip-text");
+          if (tooltipText) {
+            const originalText = tooltipText.textContent;
+            tooltipText.textContent = "Link copied!";
+            setTimeout(() => {
+              tooltipText.textContent = originalText;
+            }, 2000);
+          }
         } catch (error) {
           console.error("Failed to copy link:", error);
           showMessage("Failed to copy link", "error");

@@ -351,8 +351,8 @@ section h3 {
 }
 
 .copy-link:hover {
-  background-color: var(--success-light);
-  color: var(--success);
+  background-color: #1b5e20;
+  color: white;
 }
 
 .share-icon {
