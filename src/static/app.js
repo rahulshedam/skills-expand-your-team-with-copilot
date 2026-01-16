@@ -519,6 +519,47 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
+    // Create social sharing buttons
+    const shareUrl = encodeURIComponent(window.location.href);
+    const shareTitle = encodeURIComponent(`${name} - Mergington High School`);
+    const shareText = encodeURIComponent(`Check out ${name}: ${details.description}`);
+    
+    const socialShareButtons = `
+      <div class="social-share">
+        <span class="share-label">Share:</span>
+        <div class="share-buttons">
+          <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="share-button twitter-share tooltip"
+             aria-label="Share on Twitter">
+            <span class="share-icon">𝕏</span>
+            <span class="tooltip-text">Share on Twitter</span>
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="share-button facebook-share tooltip"
+             aria-label="Share on Facebook">
+            <span class="share-icon">f</span>
+            <span class="tooltip-text">Share on Facebook</span>
+          </a>
+          <a href="mailto:?subject=${shareTitle}&body=${shareText}%20${shareUrl}" 
+             class="share-button email-share tooltip"
+             aria-label="Share via Email">
+            <span class="share-icon">✉</span>
+            <span class="tooltip-text">Share via Email</span>
+          </a>
+          <button class="share-button copy-link tooltip" 
+                  data-activity-name="${name}"
+                  aria-label="Copy link">
+            <span class="share-icon">🔗</span>
+            <span class="tooltip-text">Copy link</span>
+          </button>
+        </div>
+      </div>
+    `;
+
     activityCard.innerHTML = `
       ${tagHtml}
       <h4>${name}</h4>
@@ -528,6 +569,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="tooltip-text">Regular meetings at this time throughout the semester</span>
       </p>
       ${capacityIndicator}
+      ${socialShareButtons}
       <div class="participants-list">
         <h5>Current Participants:</h5>
         <ul>
@@ -585,6 +627,26 @@ document.addEventListener("DOMContentLoaded", () => {
           openRegistrationModal(name);
         });
       }
+    }
+
+    // Add click handler for copy link button
+    const copyLinkButton = activityCard.querySelector(".copy-link");
+    if (copyLinkButton) {
+      copyLinkButton.addEventListener("click", async () => {
+        const url = window.location.href;
+        try {
+          await navigator.clipboard.writeText(url);
+          // Show success feedback
+          const originalText = copyLinkButton.querySelector(".tooltip-text").textContent;
+          copyLinkButton.querySelector(".tooltip-text").textContent = "Link copied!";
+          setTimeout(() => {
+            copyLinkButton.querySelector(".tooltip-text").textContent = originalText;
+          }, 2000);
+        } catch (error) {
+          console.error("Failed to copy link:", error);
+          showMessage("Failed to copy link", "error");
+        }
+      });
     }
 
     activitiesList.appendChild(activityCard);
